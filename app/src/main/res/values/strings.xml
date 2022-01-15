@@ -1,0 +1,12 @@
+<resources>
+<!--    app名称-->
+    <string name="app_name">垃圾分类</string>
+<!--    获取百度身份令牌所需的三个参数之一, 此值固定为 client_credentials-->
+    <string name="grant_type">client_credentials</string>
+<!--    获取百度身份令牌所需的三个参数之一, 此值为 API key-->
+    <string name="client_id">K4ViLLS8QoGM6Hfz5Nug6s2z</string>
+<!--    获取百度身份令牌所需的三个参数之一, 此值为 Secret Key-->
+    <string name="client_secret">Kg0KZs1fkHcWI5Gcxbbsi4GMPibdOHLX</string>
+<!--    木小果垃圾分类接口身份令牌-->
+    <string name="api_key">8351e0a3a405114b</string>
+</resources>
