@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,7 +22,6 @@ import com.baidu.duer.lajifl.utils.ImageUtil;
 import com.baidu.duer.lajifl.utils.SharedUtil;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
-
 
 import java.util.ArrayList;
 
@@ -166,9 +166,21 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
                 .setButtonsColorRes(R.color.colorPrimaryDark) // 按钮颜色
                 .setIcon(iconId) // icon
                 .setTitle(title) // 标题
+                .configureTitleView(titles -> titles.setTextSize(26)) // 设置标题文本大小
                 .setMessage(message) // 文本内容
+                .configureMessageView(messages -> messages.setTextSize(20)) // 设置文本大小
                 .setPositiveButton(android.R.string.ok, v -> Toast.makeText(context, "已确认", Toast.LENGTH_SHORT).show()) // 确认按钮监听器
+                .configureView(rootView -> { // 设置确认按钮文本大小
+                    Button positiveButton;
+                    positiveButton = (Button)rootView.findViewById(R.id.ld_btn_yes); // 可以通过id获取lovelyDialog的所有view对象(具体id可通过源码查找)
+                    positiveButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                })
                 .setNegativeButton(android.R.string.no, null) // 取消按钮监听器
+                .configureView(rootView -> { // 设置取消按钮文本大小
+                    Button positiveButton;
+                    positiveButton = (Button)rootView.findViewById(R.id.ld_btn_no);
+                    positiveButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                })
                 .show(); // 显示dialog
     }
 
