@@ -26,6 +26,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
     final private String TAG = "MainActivity";
     // 上下文
     private Context context;
-    // 共享参数工具类
-    private SharedUtil sharedUtil;
-    // 图像处理工具类
-    private ImageUtil imageUtil;
     // 图形识别结果
     private ArrayList<Result> imageResult;
     // 标识
@@ -66,9 +63,11 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
         // 关闭加载动画--在线程处理时打开
         avi.smoothToHide();
         // 获取共享参数工具类单例
-        sharedUtil = SharedUtil.getInstance(context);
+        // 共享参数工具类
+        SharedUtil sharedUtil = SharedUtil.getInstance(context);
         // 获取图像处理工具类单列
-        imageUtil = ImageUtil.getInstance(context);
+        // 图像处理工具类
+        ImageUtil imageUtil = ImageUtil.getInstance(context);
 
         // 如果共享参数中没有access_token则先获取access_token
         if(sharedUtil.readShared("access_token", "").equals("")) {
@@ -79,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
     // 拍照点击事件处理
     @OnClick(R.id.takephotoTV)
     public void onClick() {
+        // 清空识别结果
+        imResult.setImageDrawable(null);
+        tvResult.setText(null);
+
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
         if(data == null) return;
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
             imageIV.setImageBitmap(photo);
 
             // 启动垃圾分类线程
@@ -116,31 +119,35 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
         avi.smoothToHide();
         // 允许点击按钮
         takephotoTV.setEnabled(true);
-        // 将垃圾分类结果显示处理
-        Log.d(TAG,"垃圾分类结果为:" + lajiflInfo.getData().getType() + "  " + lajiflInfo.getData().getName());
+        if(lajiflInfo != null) {
+            // 将垃圾分类结果显示处理
+            Log.d(TAG,"垃圾分类结果为:" + lajiflInfo.getData().getType() + "  " + lajiflInfo.getData().getName());
 //        Toast.makeText(context, result+"执行成功"+"垃圾分类结果为:" + lajiflInfo.getData().getType() + "  " + lajiflInfo.getData().getName(), Toast.LENGTH_SHORT).show();
-        // 如果有分类结果则显示
-        if(lajiflInfo.getData().getType() != null) {
-            if(lajiflInfo.getData().getType().equals("干垃圾") || lajiflInfo.getData().getType().equals("装修垃圾") || lajiflInfo.getData().getType().equals("大件垃圾") || lajiflInfo.getData().getType().equals("不属于日常生活垃圾")) {
-                // 创建一个dialog对话框,用于显示垃圾分类结果
+            // 如果有分类结果则显示
+            if(lajiflInfo.getData().getType() != null) {
+                if(lajiflInfo.getData().getType().equals("干垃圾") || lajiflInfo.getData().getType().equals("装修垃圾") || lajiflInfo.getData().getType().equals("大件垃圾") || lajiflInfo.getData().getType().equals("不属于日常生活垃圾")) {
+                    // 创建一个dialog对话框,用于显示垃圾分类结果
 //                showDialog(R.color.ganlaji,R.drawable.ic_xml_ganlaji, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
-                showDialog(R.color.ganlaji,R.mipmap.ic_qitalaji_png, "其他垃圾", lajiflInfo.getData().getName());
+                    showDialog(R.color.ganlaji,R.mipmap.ic_qitalaji_png, "其他垃圾", lajiflInfo.getData().getName());
+                }
+                if(lajiflInfo.getData().getType().equals("湿垃圾")) {
+                    showDialog(R.color.shilaji,R.mipmap.ic_shilaji_png, "厨余垃圾", lajiflInfo.getData().getName());
+                }
+                if(lajiflInfo.getData().getType().equals("有害垃圾")) {
+                    showDialog(R.color.youhailaji,R.mipmap.ic_youhailaji_png, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+                }
+                if(lajiflInfo.getData().getType().equals("可回收垃圾")) {
+                    showDialog(R.color.huishoulaji,R.mipmap.ic_huishoulaji_png, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+                }
+                // 如果木小果垃圾分类key过期会直接闪退
+            } else {
+                // 无分类结果则提示用户未识别成功
+                showDialog(R.color.colorGray,R.drawable.ic_xml_bad, "再试一次吧", "垃圾分类太难,我不会了");
             }
-            if(lajiflInfo.getData().getType().equals("湿垃圾")) {
-                showDialog(R.color.shilaji,R.mipmap.ic_shilaji_png, "厨余垃圾", lajiflInfo.getData().getName());
-            }
-            if(lajiflInfo.getData().getType().equals("有害垃圾")) {
-                showDialog(R.color.youhailaji,R.mipmap.ic_youhailaji_png, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
-            }
-            if(lajiflInfo.getData().getType().equals("可回收垃圾")) {
-                showDialog(R.color.huishoulaji,R.mipmap.ic_huishoulaji_png, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
-            }
-            // 如果木小果垃圾分类key过期会直接闪退
         } else {
-            // 无分类结果则提示用户未识别成功
-            showDialog(R.color.colorGray,R.drawable.ic_xml_bad, "再试一次吧", "垃圾分类太难,我不会了");
+            // 处理出错时显示
+            showDialog(R.color.colorGray,R.drawable.ic_xml_bad, "出错了", "十分抱歉, 请联系管理员");
         }
-
     }
 
     // 在线程处理取消时触发
@@ -186,7 +193,22 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
                 .configureTitleView(titles -> titles.setTextSize(26)) // 设置标题文本大小
                 .setMessage(message) // 文本内容
                 .configureMessageView(messages -> messages.setTextSize(20)) // 设置文本大小
-                .setPositiveButton(android.R.string.ok, v -> Toast.makeText(context, "已确认", Toast.LENGTH_SHORT).show()) // 确认按钮监听器
+                .setPositiveButton(android.R.string.ok, v -> {
+                    if(title.equals("厨余垃圾")) {
+                        imResult.setImageResource(R.drawable.shilajitong);
+                    }
+                    if(title.equals("其他垃圾")) {
+                        imResult.setImageResource(R.drawable.ganlajitong);
+                    }
+                    if(title.equals("有害垃圾")) {
+                        imResult.setImageResource(R.drawable.youhailajitong);
+                    }
+                    if(title.equals("可回收垃圾")) {
+                        imResult.setImageResource(R.drawable.huishoulajitong);
+                    }
+                    tvResult.setText(String.format("%s\n%s", title, message));
+                    tvResult.setTextSize(20);
+                }) // 确认按钮监听器
                 .configureView(rootView -> { // 设置确认按钮文本大小
                     Button positiveButton;
                     positiveButton = (Button)rootView.findViewById(R.id.ld_btn_yes); // 可以通过id获取lovelyDialog的所有view对象(具体id可通过源码查找)

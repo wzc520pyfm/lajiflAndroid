@@ -39,14 +39,19 @@ public class LajiflController {
         LajiflService lajiflService = retrofit.create(LajiflService.class);
         // 对发送请求进行封装
         Call<Lajifl<Data<Description>>> dataCall = lajiflService.getLajifl(context.getString(R.string.api_key),m);
-        // 同步请求
-        Response<Lajifl<Data<Description>>> data = dataCall.execute();
-        Log.d(TAG, "请求成功：" + data);
-        // 解析数据
-        Lajifl<Data<Description>> body = data.body();
-        assert body != null;
-        Data<Description> resData = body.getData();
-        Description description = resData.getDescription();
-        return body;
+        try{
+            // 同步请求
+            Response<Lajifl<Data<Description>>> data = dataCall.execute();
+            Log.d(TAG, "请求成功：" + data);
+            // 解析数据
+            Lajifl<Data<Description>> body = data.body();
+            assert body != null;
+            Data<Description> resData = body.getData();
+            Description description = resData.getDescription();
+            return body;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

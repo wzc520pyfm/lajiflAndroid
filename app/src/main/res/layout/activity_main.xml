@@ -48,14 +48,14 @@
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textViewResult"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/avi" />
 
     <TextView
         android:id="@+id/textViewResult"
-        android:layout_width="215dp"
-        android:layout_height="275dp"
+        android:layout_width="161dp"
+        android:layout_height="259dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageResult"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageResult"

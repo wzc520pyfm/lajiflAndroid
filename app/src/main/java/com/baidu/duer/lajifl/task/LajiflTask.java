@@ -52,6 +52,9 @@ public class LajiflTask extends AsyncTask<Bitmap,Integer, Lajifl<Data<Descriptio
         for(int i = 0; i < imageResult.size(); i++) {
             try {
                 result = LajiflController.getLajifl(context,TAG, imageResult.get(i).getKeyword());
+                if(result == null) {
+                    return null;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -63,6 +66,7 @@ public class LajiflTask extends AsyncTask<Bitmap,Integer, Lajifl<Data<Descriptio
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            assert result != null;
             if(result.getCode().equals("200")) {
                 break;
             }
