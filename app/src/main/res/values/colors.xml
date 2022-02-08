@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorGray">#D5D4CD</color>
-    <color name="ganlaji">#f5a302</color>
-    <color name="shilaji">#00834a</color>
-    <color name="youhailaji">#b63844</color>
-    <color name="huishoulaji">#416aba</color>
+    <color name="ganlaji">#888886</color>
+    <color name="shilaji">#007c36</color>
+    <color name="youhailaji">#e50012</color>
+    <color name="huishoulaji">#004e97</color>
 </resources>

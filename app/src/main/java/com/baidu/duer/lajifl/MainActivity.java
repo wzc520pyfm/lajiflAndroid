@@ -8,8 +8,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.duer.lajifl.bean.image.Result;
@@ -39,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
     ImageView imageIV;
     @BindView(R.id.avi)
     AVLoadingIndicatorView avi;
+    @BindView(R.id.imageResult)
+    ImageView imResult;
+    @BindView(R.id.textViewResult)
+    TextView tvResult;
     // 唯一标识
     final private String TAG = "MainActivity";
     // 上下文
@@ -112,22 +118,24 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
         takephotoTV.setEnabled(true);
         // 将垃圾分类结果显示处理
         Log.d(TAG,"垃圾分类结果为:" + lajiflInfo.getData().getType() + "  " + lajiflInfo.getData().getName());
-        Toast.makeText(context, result+"执行成功"+"垃圾分类结果为:" + lajiflInfo.getData().getType() + "  " + lajiflInfo.getData().getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, result+"执行成功"+"垃圾分类结果为:" + lajiflInfo.getData().getType() + "  " + lajiflInfo.getData().getName(), Toast.LENGTH_SHORT).show();
         // 如果有分类结果则显示
         if(lajiflInfo.getData().getType() != null) {
-            if(lajiflInfo.getData().getType().equals("干垃圾")) {
+            if(lajiflInfo.getData().getType().equals("干垃圾") || lajiflInfo.getData().getType().equals("装修垃圾") || lajiflInfo.getData().getType().equals("大件垃圾") || lajiflInfo.getData().getType().equals("不属于日常生活垃圾")) {
                 // 创建一个dialog对话框,用于显示垃圾分类结果
-                showDialog(R.color.ganlaji,R.drawable.ic_xml_ganlaji, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+//                showDialog(R.color.ganlaji,R.drawable.ic_xml_ganlaji, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+                showDialog(R.color.ganlaji,R.mipmap.ic_qitalaji_png, "其他垃圾", lajiflInfo.getData().getName());
             }
             if(lajiflInfo.getData().getType().equals("湿垃圾")) {
-                showDialog(R.color.shilaji,R.drawable.ic_xml_shilaji, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+                showDialog(R.color.shilaji,R.mipmap.ic_shilaji_png, "厨余垃圾", lajiflInfo.getData().getName());
             }
             if(lajiflInfo.getData().getType().equals("有害垃圾")) {
-                showDialog(R.color.youhailaji,R.drawable.ic_xml_youhailaji, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+                showDialog(R.color.youhailaji,R.mipmap.ic_youhailaji_png, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
             }
             if(lajiflInfo.getData().getType().equals("可回收垃圾")) {
-                showDialog(R.color.huishoulaji,R.drawable.ic_xml_huishoulaji, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
+                showDialog(R.color.huishoulaji,R.mipmap.ic_huishoulaji_png, lajiflInfo.getData().getType(), lajiflInfo.getData().getName());
             }
+            // 如果木小果垃圾分类key过期会直接闪退
         } else {
             // 无分类结果则提示用户未识别成功
             showDialog(R.color.colorGray,R.drawable.ic_xml_bad, "再试一次吧", "垃圾分类太难,我不会了");
@@ -165,6 +173,15 @@ public class MainActivity extends AppCompatActivity implements LajiflTask.OnGame
                 .setTopColorRes(colorId) // 主体背景色
                 .setButtonsColorRes(R.color.colorPrimaryDark) // 按钮颜色
                 .setIcon(iconId) // icon
+                .configureView(rootView -> { // 设置icon大小(实现自适应)
+                    ImageView iconImage;
+                    iconImage = (ImageView) rootView.findViewById(R.id.ld_icon);
+                    ViewGroup.LayoutParams lp = iconImage.getLayoutParams();
+                    lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    iconImage.setLayoutParams(lp);
+                    iconImage.setAdjustViewBounds(true);
+                })
                 .setTitle(title) // 标题
                 .configureTitleView(titles -> titles.setTextSize(26)) // 设置标题文本大小
                 .setMessage(message) // 文本内容
