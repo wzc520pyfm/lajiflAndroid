@@ -45,6 +45,7 @@ public class LajiflTask extends AsyncTask<Bitmap,Integer, Lajifl<Data<Descriptio
         if(imageResult == null) {
             // 如果返回数据为空, 可能是token过期,重新获取一次token
             AccessTokenController.getAccessToken(context,TAG);
+            return null;
         }
         Lajifl<Data<Description>> result = new Lajifl<>();
         // 如果图像识别处理返回值不为空则执行垃圾分类
