@@ -1,3 +1,7 @@
+#### 运行效果
+
+<img src="https://cdn.jsdelivr.net/gh/wzc520pyfm/Picbed_PicGo@master/img/Screenshot_20220404_225720_com.baidu.duer.lajifl.jpg" alt="Screenshot_20220404_225720_com.baidu.duer.lajifl" style="zoom: 33%;" /><img src="https://cdn.jsdelivr.net/gh/wzc520pyfm/Picbed_PicGo@master/img/Screenshot_20220404_225724_com.baidu.duer.lajifl.jpg" alt="Screenshot_20220404_225724_com.baidu.duer.lajifl" style="zoom: 33%;" />
+
 ### 1. 登录百度智能云并实名认证([百度智能云-智能时代基础设施 (baidu.com)](https://cloud.baidu.com/?from=console))
 
 ### 2. 管理控制台 -> 产品服务 -> 图像识别 -> 创建应用 -> (免费领取接口调用次数) -> 选择应用归属为个人(并填好所有必填项) -> 创建应用
