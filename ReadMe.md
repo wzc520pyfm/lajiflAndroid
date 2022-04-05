@@ -1,6 +1,6 @@
 #### 运行效果
 
-<img src="https://cdn.jsdelivr.net/gh/wzc520pyfm/Picbed_PicGo@master/img/Screenshot_20220404_225720_com.baidu.duer.lajifl.jpg" alt="Screenshot_20220404_225720_com.baidu.duer.lajifl" style="zoom: 15%;" /><img src="https://cdn.jsdelivr.net/gh/wzc520pyfm/Picbed_PicGo@master/img/Screenshot_20220404_225724_com.baidu.duer.lajifl.jpg" alt="Screenshot_20220404_225724_com.baidu.duer.lajifl" style="zoom: 15%;" />
+<img src="https://cdn.jsdelivr.net/gh/wzc520pyfm/Picbed_PicGo@master/img/Screenshot_20220404_225720_com.baidu.duer.lajifl.jpg" alt="Screenshot_20220404_225720_com.baidu.duer.lajifl" style="width:50%;height:50%;" /><img src="https://cdn.jsdelivr.net/gh/wzc520pyfm/Picbed_PicGo@master/img/Screenshot_20220404_225724_com.baidu.duer.lajifl.jpg" alt="Screenshot_20220404_225724_com.baidu.duer.lajifl" style="width:50%;height:50%;" />
 
 ### 1. 登录百度智能云并实名认证([百度智能云-智能时代基础设施 (baidu.com)](https://cloud.baidu.com/?from=console))
 
